@@ -28,7 +28,7 @@ flowchart TD
     F --> G[Deploy that digest to Render]
 ```
 
-Pull requests run the validation job only. A push to `main` runs validation, then builds and scans the release image. The workflow uploads the image only after the container scan passes. If Render credentials are not configured, image publication still completes and the deployment step reports that it was skipped.
+Pull requests run the tests and source scans, check the Dockerfile, then build and scan a validation image. They do not receive permission to publish an image or deploy the app. A push to `main` repeats validation, builds and scans the release image, then uploads it only after the container scan passes. If Render credentials are not configured, image publication still completes and the deployment step reports that it was skipped.
 
 ## Run the app locally
 

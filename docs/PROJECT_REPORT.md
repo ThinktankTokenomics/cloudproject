@@ -52,7 +52,7 @@ flowchart TD
 
 ### Pull request path
 
-When a pull request targets `main`, GitHub Actions runs the application tests, dependency check, source secret and vulnerability scan, and Dockerfile configuration scan. The pull request does not receive permission to publish an image or deploy the app.
+When a pull request targets `main`, GitHub Actions runs the application tests, dependency check, source secret and vulnerability scan, Dockerfile configuration scan, and a container build and image scan. The pull request does not receive permission to publish an image or deploy the app.
 
 ### Release path
 

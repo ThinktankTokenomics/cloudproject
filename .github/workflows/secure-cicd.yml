@@ -49,6 +49,24 @@ jobs:
             --exit-code 1 \
             /repo/Dockerfile
 
+      - name: Build a validation image
+        run: docker build --pull --build-arg "BUILD_SHA=$GITHUB_SHA" --tag "trustgate-validation:$GITHUB_SHA" .
+
+      - name: Scan validation image before merge
+        run: |
+          mkdir -p "$RUNNER_TEMP/trivy-cache"
+          docker save --output "$RUNNER_TEMP/trustgate-validation.tar" "trustgate-validation:$GITHUB_SHA"
+          docker run --rm \
+            -v "$RUNNER_TEMP:/scan:ro" \
+            -v "$RUNNER_TEMP/trivy-cache:/root/.cache" \
+            aquasec/trivy:0.76.1 image \
+            --input /scan/trustgate-validation.tar \
+            --scanners vuln,secret \
+            --severity HIGH,CRITICAL \
+            --ignore-unfixed \
+            --exit-code 1 \
+            --no-progress
+
   publish:
     name: Scan and publish immutable image
     needs: validate

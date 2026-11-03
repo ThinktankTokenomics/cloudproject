@@ -7,9 +7,9 @@
 ## Flow in simple steps
 
 1. I push code or open a pull request.
-2. GitHub Actions runs the tests and source security checks.
-3. If a check fails, the release stops.
-4. On `main`, the pipeline builds and scans the Docker image.
+2. GitHub Actions runs the tests, dependency check, source scan, and Dockerfile check.
+3. It builds and scans a validation image; a failed check stops the release.
+4. On `main`, the pipeline rebuilds and scans the release image.
 5. If the image passes, it is pushed to GitHub Container Registry.
 6. The registry returns a SHA-256 digest for that image.
 7. The workflow sends the digest to Render for deployment.
