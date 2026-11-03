@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b1424">
+    <meta name="description" content="TrustGate demonstrates a secure delivery pipeline for a cloud-native application.">
+    <title>TrustGate | Secure Delivery</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+    <script src="/assets/app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="TrustGate home">
+          <span class="brand-mark" aria-hidden="true">T</span>
+          <span>TrustGate</span>
+        </a>
+        <div class="topbar-right">
+          <span class="environment-label">CLOUD DELIVERY DEMO</span>
+          <span id="connection-pill" class="connection-pill" data-state="loading">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span id="connection-label">Connecting</span>
+          </span>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="page-title">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="eyebrow-line"></span> Secure CI/CD for a cloud-native app</p>
+            <h1 id="page-title">A safer route<br><span>from code to cloud.</span></h1>
+            <p class="hero-description">
+              TrustGate is a small Node.js API protected by automated checks. A release is published only after the pipeline passes, then deployed by its SHA-256 image digest.
+            </p>
+            <a class="text-link" href="#pipeline">See how the pipeline works <span aria-hidden="true">↓</span></a>
+          </div>
+
+          <aside class="release-card" aria-labelledby="release-title">
+            <div class="card-heading">
+              <div>
+                <p class="card-kicker">LIVE SERVICE</p>
+                <h2 id="release-title">Release status</h2>
+              </div>
+              <span class="live-icon" aria-hidden="true"><span></span></span>
+            </div>
+            <div class="release-state">
+              <span id="service-dot" class="large-status-dot" data-state="loading" aria-hidden="true"></span>
+              <div>
+                <strong id="service-status">Checking service</strong>
+                <span id="service-name" class="muted">Waiting for API response</span>
+              </div>
+            </div>
+            <div class="release-details">
+              <div class="detail-row">
+                <span>Version</span>
+                <code id="version-value">—</code>
+              </div>
+              <div class="detail-row">
+                <span>Commit</span>
+                <code id="commit-value">—</code>
+              </div>
+              <div class="detail-row">
+                <span>Runtime</span>
+                <code id="runtime-value">—</code>
+              </div>
+            </div>
+            <p id="updated-at" class="updated-at">Status updates when this page loads.</p>
+          </aside>
+        </section>
+
+        <section class="section-block" aria-labelledby="checks-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">THE RELEASE GATES</p>
+              <h2 id="checks-title">Every change earns its way through.</h2>
+            </div>
+            <p class="section-note">A failing check stops the release before it reaches the image registry.</p>
+          </div>
+
+          <div class="checks-grid">
+            <article class="check-card">
+              <span class="check-number">01</span>
+              <div class="check-icon check-icon-test" aria-hidden="true">✓</div>
+              <h3>App tests</h3>
+              <p>Built-in Node.js tests check the API before a change can move forward.</p>
+              <span class="check-tag">QUALITY GATE</span>
+            </article>
+            <article class="check-card">
+              <span class="check-number">02</span>
+              <div class="check-icon check-icon-secret" aria-hidden="true">⌁</div>
+              <h3>Secret scan</h3>
+              <p>Trivy looks for accidentally committed credentials in the project files.</p>
+              <span class="check-tag">SECRET DETECTION</span>
+            </article>
+            <article class="check-card">
+              <span class="check-number">03</span>
+              <div class="check-icon check-icon-dependency" aria-hidden="true">◇</div>
+              <h3>Dependency check</h3>
+              <p>npm audit and Trivy check dependencies for known security issues.</p>
+              <span class="check-tag">VULNERABILITY SCAN</span>
+            </article>
+            <article class="check-card">
+              <span class="check-number">04</span>
+              <div class="check-icon check-icon-image" aria-hidden="true">▦</div>
+              <h3>Container scan</h3>
+              <p>The Docker image is scanned before it is uploaded to the registry.</p>
+              <span class="check-tag">IMAGE SECURITY</span>
+            </article>
+            <article class="check-card check-card-digest">
+              <span class="check-number">05</span>
+              <div class="check-icon check-icon-digest" aria-hidden="true">#</div>
+              <h3>Digest-based deploy</h3>
+              <p>Render receives the exact SHA-256 image digest that passed the scan.</p>
+              <span class="check-tag">INTEGRITY CHECK</span>
+            </article>
+          </div>
+        </section>
+
+        <section id="pipeline" class="pipeline-section" aria-labelledby="pipeline-title">
+          <div class="section-heading pipeline-heading">
+            <div>
+              <p class="eyebrow">FROM COMMIT TO RELEASE</p>
+              <h2 id="pipeline-title">One guarded path.</h2>
+            </div>
+            <p class="section-note">The deploy step only runs after the earlier gates succeed.</p>
+          </div>
+          <ol class="pipeline-list">
+            <li><span class="pipeline-step">01</span><div><strong>Push or pull request</strong><p>GitHub starts the workflow for a proposed change.</p></div></li>
+            <li><span class="pipeline-step">02</span><div><strong>Test and scan</strong><p>Tests, dependency checks, secret scans, and configuration checks run.</p></div></li>
+            <li><span class="pipeline-step">03</span><div><strong>Build and inspect</strong><p>On the main branch, the container is built and scanned before publishing.</p></div></li>
+            <li><span class="pipeline-step">04</span><div><strong>Publish by digest</strong><p>The registry gives the image a SHA-256 digest that identifies its contents.</p></div></li>
+            <li><span class="pipeline-step">05</span><div><strong>Deploy the verified image</strong><p>Render is asked to deploy that digest, not a moving <code>latest</code> tag.</p></div></li>
+          </ol>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span>TrustGate · Secure CI/CD learning project</span>
+        <a href="/health">API health endpoint <span aria-hidden="true">↗</span></a>
+      </footer>
+    </div>
+  </body>
+</html>
