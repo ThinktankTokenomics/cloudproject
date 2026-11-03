@@ -47,7 +47,6 @@ jobs:
             aquasec/trivy:0.76.1 config \
             --severity HIGH,CRITICAL \
             --exit-code 1 \
-            --no-progress \
             /repo/Dockerfile
 
   publish:
