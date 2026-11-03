@@ -4,6 +4,8 @@ ENV NODE_ENV=production \
     PORT=10000
 
 WORKDIR /app
+RUN npm install --global npm@12.2.1 --ignore-scripts --no-audit --no-fund \
+    && npm cache clean --force
 RUN chown node:node /app
 
 COPY --chown=node:node package.json package-lock.json ./

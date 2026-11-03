@@ -97,6 +97,7 @@ A hash detects whether the image contents differ from the image identified by th
 
 - The API uses Node.js built-in modules and has no runtime npm dependencies.
 - The container runs as the unprivileged `node` user.
+- The bundled npm CLI is updated to a fixed version before the image is scanned.
 - The Dockerfile uses `npm ci` with lifecycle scripts disabled.
 - The API only permits `GET` and `HEAD` requests and uses a fixed allowlist for static files.
 - Responses include a Content Security Policy, `X-Content-Type-Options`, `X-Frame-Options`, and a restrictive Referrer Policy.
