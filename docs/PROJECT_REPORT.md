@@ -107,7 +107,7 @@ Render's free web services are suitable for a demonstration but can spin down af
 ## 10. Limitations and future work
 
 - The container base image uses a maintained Node.js Alpine tag. A production project should pin and update the base image by digest.
-- The Dockerfile updates the npm CLI bundled in the base image before scanning, because the first image scan found high-severity advisories in the bundled CLI dependencies.
+- The runtime image removes npm and Corepack because the application has no runtime package dependencies. Dependency auditing remains in CI.
 - The project records an image digest but does not yet sign it. Cosign or GitHub artifact attestations could provide producer and build provenance verification.
 - Deployment uses a Render API key kept in GitHub Secrets. A production design should use a narrowly scoped deployment credential or another short-lived identity mechanism if the hosting platform supports it.
 - The app is stateless and does not include a database, autoscaling, or production monitoring.
