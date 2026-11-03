@@ -1,4 +1,5 @@
 FROM node:24-alpine
+LABEL org.opencontainers.image.source="https://github.com/ThinktankTokenomics/cloudproject"
 
 ENV NODE_ENV=production \
     PORT=10000
